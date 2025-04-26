@@ -17,10 +17,10 @@ app.use(express.json({ extended: false }));
 app.use(morgan('dev'));
 
 // Define routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/services', require('./routes/services'));
-app.use('/api/bookings', require('./routes/bookings'));
+// app.use('/api/auth', require('./routes/auth'));
+// app.use('/api/users', require('./routes/users'));
+// app.use('/api/services', require('./routes/services'));
+// app.use('/api/bookings', require('./routes/bookings'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
