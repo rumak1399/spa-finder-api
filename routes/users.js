@@ -1,68 +1,55 @@
-import { Router } from "express";
-const router = Router();
-import { check } from "express-validator";
-import {
-  updateProfile,
-  changePassword,
-  addFavorite,
-  removeFavorite,
-  getFavorites,
-  getUsers,
-  getUserById,
-  updateUser,
-  deleteUser,
-} from "../controllers/userController";
-import { protect, authorize } from "../middleware/auth";
+const express = require('express');
+const router = express.Router();
+const { check } = require('express-validator');
+const userController = require('../controllers/userController');
+const { protect, authorize } = require('../middleware/auth');
 
 // Update user profile
 router.put(
-  "/profile",
-  [
-    protect,
-    [
-      check("name", "Name is required").optional().not().isEmpty(),
-      check("email", "Please include a valid email").optional().isEmail(),
-    ],
-  ],
-  updateProfile
+'/profile',
+[
+protect,
+[
+  check('name', 'Name is required').optional().not().isEmpty(),
+  check('email', 'Please include a valid email').optional().isEmail()
+]
+],
+userController.updateProfile
 );
 
 // Change password
 router.put(
-  "/password",
-  [
-    protect,
-    [
-      check("currentPassword", "Current password is required").not().isEmpty(),
-      check(
-        "newPassword",
-        "Please enter a password with 6 or more characters"
-      ).isLength({ min: 6 }),
-    ],
-  ],
-  changePassword
+'/password',
+[
+protect,
+[
+  check('currentPassword', 'Current password is required').not().isEmpty(),
+  check('newPassword', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
+]
+],
+userController.changePassword
 );
 
 // Add service to favorites
-router.put("/favorites/:serviceId", protect, addFavorite);
+router.put('/favorites/:serviceId', protect, userController.addFavorite);
 
 // Remove service from favorites
-router.delete("/favorites/:serviceId", protect, removeFavorite);
+router.delete('/favorites/:serviceId', protect, userController.removeFavorite);
 
 // Get user favorites
-router.get("/favorites", protect, getFavorites);
+router.get('/favorites', protect, userController.getFavorites);
 
 // Admin routes
 // Get all users - admin only
-router.get("/", [protect, authorize("admin")], getUsers);
+router.get('/', [protect, authorize('admin')], userController.getUsers);
 
 // Get user by ID - admin only
-router.get("/:id", [protect, authorize("admin")], getUserById);
+router.get('/:id', [protect, authorize('admin')], userController.getUserById);
 
 // Update user - admin only
-router.put("/:id", [protect, authorize("admin")], updateUser);
+router.put('/:id', [protect, authorize('admin')], userController.updateUser);
 
 // Delete user - admin only
-router.delete("/:id", [protect, authorize("admin")], deleteUser);
+router.delete('/:id', [protect, authorize('admin')], userController.deleteUser);
 
-export default router;
+module.exports = router;

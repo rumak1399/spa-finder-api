@@ -1,10 +1,10 @@
-import { findById, findByIdAndUpdate, find } from "../models/User";
-import { validationResult } from "express-validator";
+const User = require("../models/User");
+const { validationResult } = require("express-validator");
 
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private
-export async function updateProfile(req, res) {
+exports.updateProfile = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -19,7 +19,7 @@ export async function updateProfile(req, res) {
       delete req.body.role;
     }
 
-    const user = await findById(req.user.id);
+    const user = await User.findById(req.user.id);
 
     if (!user) {
       return res.status(404).json({
@@ -29,7 +29,7 @@ export async function updateProfile(req, res) {
     }
 
     // Update user fields
-    const updatedUser = await findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
       { $set: req.body },
       { new: true, runValidators: true }
@@ -46,12 +46,12 @@ export async function updateProfile(req, res) {
       message: "Server error",
     });
   }
-}
+};
 
 // @desc    Change password
 // @route   PUT /api/users/password
 // @access  Private
-export async function changePassword(req, res) {
+exports.changePassword = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -60,7 +60,7 @@ export async function changePassword(req, res) {
   try {
     const { currentPassword, newPassword } = req.body;
 
-    const user = await findById(req.user.id);
+    const user = await User.findById(req.user.id);
 
     // Check current password
     const isMatch = await user.matchPassword(currentPassword);
@@ -86,14 +86,14 @@ export async function changePassword(req, res) {
       message: "Server error",
     });
   }
-}
+};
 
 // @desc    Add service to favorites
 // @route   PUT /api/users/favorites/:serviceId
 // @access  Private
-export async function addFavorite(req, res) {
+exports.addFavorite = async (req, res) => {
   try {
-    const user = await findById(req.user.id);
+    const user = await User.findById(req.user.id);
 
     // Check if service is already in favorites
     if (user.favorites.includes(req.params.serviceId)) {
@@ -117,14 +117,14 @@ export async function addFavorite(req, res) {
       message: "Server error",
     });
   }
-}
+};
 
 // @desc    Remove service from favorites
 // @route   DELETE /api/users/favorites/:serviceId
 // @access  Private
-export async function removeFavorite(req, res) {
+exports.removeFavorite = async (req, res) => {
   try {
-    const user = await findById(req.user.id);
+    const user = await User.findById(req.user.id);
 
     // Check if service is in favorites
     if (!user.favorites.includes(req.params.serviceId)) {
@@ -150,14 +150,14 @@ export async function removeFavorite(req, res) {
       message: "Server error",
     });
   }
-}
+};
 
 // @desc    Get user favorites
 // @route   GET /api/users/favorites
 // @access  Private
-export async function getFavorites(req, res) {
+exports.getFavorites = async (req, res) => {
   try {
-    const user = await findById(req.user.id).populate({
+    const user = await User.findById(req.user.id).populate({
       path: "favorites",
       select: "name description image priceRange averageRating",
     });
@@ -174,14 +174,14 @@ export async function getFavorites(req, res) {
       message: "Server error",
     });
   }
-}
+};
 
 // @desc    Get all users (admin only)
 // @route   GET /api/users
 // @access  Private (Admin)
-export async function getUsers(req, res) {
+exports.getUsers = async (req, res) => {
   try {
-    const users = await find().select("-password");
+    const users = await User.find().select("-password");
 
     res.json({
       success: true,
@@ -195,14 +195,14 @@ export async function getUsers(req, res) {
       message: "Server error",
     });
   }
-}
+};
 
 // @desc    Get user by ID (admin only)
 // @route   GET /api/users/:id
 // @access  Private (Admin)
-export async function getUserById(req, res) {
+exports.getUserById = async (req, res) => {
   try {
-    const user = await findById(req.params.id).select("-password");
+    const user = await User.findById(req.params.id).select("-password");
 
     if (!user) {
       return res.status(404).json({
@@ -228,14 +228,14 @@ export async function getUserById(req, res) {
       message: "Server error",
     });
   }
-}
+};
 
 // @desc    Update user (admin only)
 // @route   PUT /api/users/:id
 // @access  Private (Admin)
-export async function updateUser(req, res) {
+exports.updateUser = async (req, res) => {
   try {
-    const user = await findById(req.params.id);
+    const user = await User.findById(req.params.id);
 
     if (!user) {
       return res.status(404).json({
@@ -245,7 +245,7 @@ export async function updateUser(req, res) {
     }
 
     // Update user fields
-    const updatedUser = await findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
       { new: true, runValidators: true }
@@ -268,14 +268,14 @@ export async function updateUser(req, res) {
       message: "Server error",
     });
   }
-}
+};
 
 // @desc    Delete user (admin only)
 // @route   DELETE /api/users/:id
 // @access  Private (Admin)
-export async function deleteUser(req, res) {
+exports.deleteUser = async (req, res) => {
   try {
-    const user = await findById(req.params.id);
+    const user = await User.findById(req.params.id);
 
     if (!user) {
       return res.status(404).json({
@@ -303,4 +303,4 @@ export async function deleteUser(req, res) {
       message: "Server error",
     });
   }
-}
+};

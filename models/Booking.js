@@ -1,18 +1,18 @@
-import { Schema, model } from 'mongoose';
+const mongoose = require('mongoose');
   
-const BookingSchema = new Schema({
+const BookingSchema = new mongoose.Schema({
   user: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
   service: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Service',
     required: true
   },
   provider: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
@@ -47,4 +47,4 @@ const BookingSchema = new Schema({
   }
 });
 
-export default model('Booking', BookingSchema);
+module.exports = mongoose.model('Booking', BookingSchema);

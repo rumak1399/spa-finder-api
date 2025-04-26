@@ -1,9 +1,9 @@
-import express, { json } from "express";
-import cors from "cors";
-import morgan from "morgan";
-import connectDB from "./config/db";
-import { resolve } from "path";
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const connectDB = require('./config/db');
+const path = require('path');
+require('dotenv').config();
 
 // Initialize express app
 const app = express();
@@ -13,22 +13,22 @@ connectDB();
 
 // Middleware
 app.use(cors());
-app.use(json({ extended: false }));
-app.use(morgan("dev"));
+app.use(express.json({ extended: false }));
+app.use(morgan('dev'));
 
 // Define routes
-// app.use("/api/auth", require("./routes/auth"));
-// app.use("/api/users", require("./routes/users"));
-// app.use("/api/services", require("./routes/services"));
-// app.use("/api/bookings", require("./routes/bookings"));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/services', require('./routes/services'));
+app.use('/api/bookings', require('./routes/bookings'));
 
 // Serve static assets in production
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === 'production') {
   // Set static folder
-  app.use(("client/build"));
+  app.use(express.static('client/build'));
 
-  app.get("*", (req, res) => {
-    res.sendFile(resolve(__dirname, "client", "build", "index.html"));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
 

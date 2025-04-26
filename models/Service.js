@@ -1,17 +1,17 @@
-import { Schema, model } from 'mongoose';
+const mongoose = require('mongoose');
   
-const ServiceSchema = new Schema({
+const ServiceSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
   provider: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
   category: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
     required: true
   },
@@ -68,7 +68,7 @@ const ServiceSchema = new Schema({
   }],
   ratings: [{
     user: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
     rating: {
@@ -113,4 +113,4 @@ ServiceSchema.pre('save', function(next) {
   next();
 });
 
-export default model('Service', ServiceSchema);
+module.exports = mongoose.model('Service', ServiceSchema);

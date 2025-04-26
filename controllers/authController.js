@@ -1,10 +1,10 @@
-import User, { findOne, findById } from '../models/User';
-import { sign } from 'jsonwebtoken';
-import { validationResult } from 'express-validator';
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
 // Generate JWT Token
 const generateToken = (id) => {
-  return sign({ id }, process.env.JWT_SECRET || 'thesecret', {
+  return jwt.sign({ id }, process.env.JWT_SECRET || 'thesecret', {
     expiresIn: '30d'
   });
 };
@@ -12,7 +12,7 @@ const generateToken = (id) => {
 // @desc    Register user
 // @route   POST /api/auth/register
 // @access  Public
-export async function register(req, res) {
+exports.register = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -22,7 +22,7 @@ export async function register(req, res) {
 
   try {
     // Check if user already exists
-    let user = await findOne({ email });
+    let user = await User.findOne({ email });
 
     if (user) {
       return res.status(400).json({
@@ -58,12 +58,12 @@ export async function register(req, res) {
       message: 'Server error'
     });
   }
-}
+};
 
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-export async function login(req, res) {
+exports.login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -73,7 +73,7 @@ export async function login(req, res) {
 
   try {
     // Check for user
-    const user = await findOne({ email });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(400).json({
@@ -109,14 +109,14 @@ export async function login(req, res) {
       message: 'Server error'
     });
   }
-}
+};
 
 // @desc    Get current logged in user
 // @route   GET /api/auth/me
 // @access  Private
-export async function getMe(req, res) {
+exports.getMe = async (req, res) => {
   try {
-    const user = await findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select('-password');
     res.json({
       success: true,
       data: user
@@ -128,4 +128,4 @@ export async function getMe(req, res) {
       message: 'Server error'
     });
   }
-}
+};

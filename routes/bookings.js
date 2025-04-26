@@ -1,27 +1,20 @@
-import { Router } from "express";
-const router = Router();
-import { check } from "express-validator";
-import {
-  getBookings,
-  getUserBookings,
-  getProviderBookings,
-  createBooking,
-  updateBookingStatus,
-  deleteBooking,
-} from "../controllers/bookingController";
-import { protect, authorize } from "../middleware/auth";
+const express = require("express");
+const router = express.Router();
+const { check } = require("express-validator");
+const bookingController = require("../controllers/bookingController");
+const { protect, authorize } = require("../middleware/auth");
 
 // Get all bookings - admin only
-router.get("/", [protect, authorize("admin")], getBookings);
+router.get("/", [protect, authorize("admin")], bookingController.getBookings);
 
 // Get user bookings
-router.get("/me", protect, getUserBookings);
+router.get("/me", protect, bookingController.getUserBookings);
 
 // Get provider bookings
 router.get(
   "/provider",
   [protect, authorize("provider", "admin")],
-  getProviderBookings
+  bookingController.getProviderBookings
 );
 
 // Create booking
@@ -35,13 +28,13 @@ router.post(
       check("time", "Time is required").not().isEmpty(),
     ],
   ],
-  createBooking
+  bookingController.createBooking
 );
 
 // Update booking status
-router.put("/:id", protect, updateBookingStatus);
+router.put("/:id", protect, bookingController.updateBookingStatus);
 
 // Delete booking
-router.delete("/:id", protect, deleteBooking);
+router.delete("/:id", protect, bookingController.deleteBooking);
 
-export default router;
+module.exports = router;
