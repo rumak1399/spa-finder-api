@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -9,6 +8,8 @@ import authRouter from "./routes/auth.js";
 import usersRouter from "./routes/users.js";
 import servicesRouter from "./routes/services.js";
 import bookingsRouter from "./routes/bookings.js";
+import postRouter from "./routes/post.js";
+import categoriesRouter from "./routes/categories.js";
 const app = express();
 
 app.use(cors());
@@ -18,9 +19,20 @@ app.use(cookieParser());
 
 connectDB();
 
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+
 app.get("/", (req, res) => {
   res.status(200).send("Hello from server!");
 });
+
 
 
 
@@ -34,6 +46,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/services', servicesRouter);
 app.use('/api/bookings', bookingsRouter);
+app.use('/api/post', postRouter);
+app.use('/api/category', categoriesRouter);
 
 
 

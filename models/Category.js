@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
@@ -15,10 +15,11 @@ const CategorySchema = new Schema({
   description: {
     type: String,
   },
+  subCategories: [String],
   created: {
     type: Date,
     default: Date.now,
   },
 });
 
-export default model('Category', CategorySchema);
+export default model("Category", CategorySchema);
