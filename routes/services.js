@@ -9,7 +9,7 @@ import {
   getServices,
   updateService,
 } from "../controllers/serviceController.js";
-import { protect } from "../middleware/auth.js";
+import { authorize, protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
