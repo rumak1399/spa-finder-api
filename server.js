@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import connectDB from "./config/db";
+import connectDB from "./config/db.js";
 dotenv.config();
 import authRouter from "./routes/auth.js";
 const app = express();
