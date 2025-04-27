@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import Service from '../models/Service';
+import Service from '../models/Service.js';
 
 // @desc    Get all services
 // @route   GET /api/services
