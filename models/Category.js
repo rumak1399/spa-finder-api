@@ -21,4 +21,4 @@ const CategorySchema = new Schema({
   },
 });
 
-export const Category = model('Category', CategorySchema);
+export default model('Category', CategorySchema);

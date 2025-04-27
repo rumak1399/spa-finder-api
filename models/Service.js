@@ -123,5 +123,5 @@ ServiceSchema.pre('save', function (next) {
 });
 
 // Finally, export it
-export const Service =  model('Service', ServiceSchema);
+export default  model('Service', ServiceSchema);
 

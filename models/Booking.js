@@ -117,5 +117,5 @@ ServiceSchema.pre('save', function (next) {
   next();
 });
 
-export const Service =  model('Service', ServiceSchema);
+export default  model('Service', ServiceSchema);
 
