@@ -1,6 +1,6 @@
 import express from "express";
 import { check } from "express-validator";
-import { authorize, protect } from "../middleware/auth";
+import { authorize, protect } from "../middleware/auth.js";
 import {
   addFavorite,
   changePassword,
