@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "builds": [
+    {
+    "src": "server.js",
+    "use": "@vercel/node"
+    }
+    ],
+    "routes": [
+    {
+    "src": "/api/(.*)",
+    "dest": "server.js"
+    }
+    ],
+    "env": {
+    "NODE_ENV": "development",
+    "MONGO_URI": "mongodb+srv://rumak1399:yGis1lx8pZPhxttP@cluster0.dmsqnb4.mongodb.net/spadb?retryWrites=true&w=majority&appName=Cluster0",
+    "PORT": "5000",
+    "JWT_SECRET": "your_jwt_secret"
+    }
+}
