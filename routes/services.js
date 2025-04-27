@@ -3,6 +3,7 @@ import { check } from "express-validator";
 import {
   addReview,
   createCategory,
+  createService,
   deleteService,
   getCategories,
   getService,
