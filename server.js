@@ -6,13 +6,15 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 dotenv.config();
 import authRouter from "./routes/auth.js";
+import usersRouter from "./routes/users.js";
+import servicesRouter from "./routes/services.js";
+import bookingsRouter from "./routes/bookings.js";
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-// mongoose.connect(process.env.MONGO_URI).then(()=>(console.log("Connected to Database!"))).catch(()=>("Not Connected to Database!"));
 
 connectDB();
 
@@ -22,13 +24,17 @@ app.get("/", (req, res) => {
 
 
 
-// app.use("/api/auth" , authRouter);
-// app.use("/api/user" , userRouter);
-// app.use("/api/movie" , movieRouter);
-// app.use("/api/payment" , paymentRouter);
-// app.get("/token" , verifyToken)
+// app.use('/api/auth', require('./routes/auth'));
+// app.use('/api/users', require('./routes/users'));
+// app.use('/api/services', require('./routes/services'));
+// app.use('/api/bookings', require('./routes/bookings'));
+
 
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/services', servicesRouter);
+app.use('/api/bookings', bookingsRouter);
+
 
 
 app.use((err, req, res, next) => {
