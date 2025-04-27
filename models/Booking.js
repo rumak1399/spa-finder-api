@@ -1,121 +1,51 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
-const ServiceSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+const BookingSchema = new  Schema({
+  user: {
+    type:  Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  service: {
+    type:  Schema.Types.ObjectId,
+    ref: 'Service',
+    required: true
   },
   provider: {
     type:  Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    required: true
   },
-  category: {
-    type:  Schema.Types.ObjectId,
-    ref: 'Category',
-    required: true,
+  date: {
+    type: Date,
+    required: true
   },
-  description: {
+  time: {
     type: String,
-    required: true,
+    required: true
   },
-  image: {
+  price: {
+    type: Number,
+    required: true
+  },
+  specialRequests: {
+    type: String
+  },
+  status: {
     type: String,
+    enum: ['pending', 'confirmed', 'cancelled', 'completed'],
+    default: 'pending'
   },
-  location: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      default: 'Point',
-    },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
-    address: {
-      street: String,
-      city: String,
-      state: String,
-      zipCode: String,
-      country: String,
-    },
-  },
-  priceRange: {
-    min: {
-      type: Number,
-      required: true,
-    },
-    max: {
-      type: Number,
-      required: true,
-    },
-  },
-  duration: {
-    type: Number, // in minutes
-    required: true,
-  },
-  availability: [
-    {
-      day: {
-        type: String,
-        enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
-      },
-      startTime: String,
-      endTime: String,
-      isAvailable: {
-        type: Boolean,
-        default: true,
-      },
-    },
-  ],
-  ratings: [
-    {
-      user: {
-        type:  Schema.Types.ObjectId,
-        ref: 'User',
-      },
-      rating: {
-        type: Number,
-        min: 1,
-        max: 5,
-      },
-      review: String,
-      date: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
-  averageRating: {
-    type: Number,
-    default: 0,
-  },
-  totalReviews: {
-    type: Number,
-    default: 0,
-  },
-  isActive: {
-    type: Boolean,
-    default: true,
+  paymentStatus: {
+    type: String,
+    enum: ['pending', 'paid', 'refunded'],
+    default: 'pending'
   },
   created: {
     type: Date,
-    default: Date.now,
-  },
-});
-
-// Create geospatial index for location
-ServiceSchema.index({ location: '2dsphere' });
-
-// Calculate average rating before saving
-ServiceSchema.pre('save', function (next) {
-  if (this.ratings.length > 0) {
-    const sum = this.ratings.reduce((acc, item) => acc + item.rating, 0);
-    this.averageRating = sum / this.ratings.length;
-    this.totalReviews = this.ratings.length;
+    default: Date.now
   }
-  next();
 });
 
-export default  model('Service', ServiceSchema);
-
+// Use export default to export the model
+export default model('Booking', BookingSchema);
