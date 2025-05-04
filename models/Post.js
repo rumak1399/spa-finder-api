@@ -1,9 +1,9 @@
 import { model, Schema } from "mongoose";
 
-const ProductSchema = new Schema(
+const PostSchema = new Schema(
   {
     title: { type: String, required: true },
-    slug: { type: String, required: true, unique: true }, // Unique slug
+    // slug: { type: String, required: true, unique: true }, // Unique slug
     description: { type: String, required: false },
     specification: { type: String, required: false, default: "" },
     image: {
@@ -14,17 +14,17 @@ const ProductSchema = new Schema(
       url: String,
       alt: String,
     },
-    brochure: {
-      url: String,
-      filename: String,
-    },
-    price: { type: Number, required: false },
+    // brochure: {
+    //   url: String,
+    //   filename: String,
+    // },
+    price: { type: Number },
     discount: { type: Boolean, required: false },
     discountAmount: { type: Number, required: false },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category", // Reference the Category model
-      required: true,
+      required: false,
     },
     featured: { type: Boolean, required: false },
     newlyArrived: { type: Boolean, required: false },
@@ -35,4 +35,4 @@ const ProductSchema = new Schema(
   }
 );
 
-export default model("Product", ProductSchema);
+export default model("Post", PostSchema);

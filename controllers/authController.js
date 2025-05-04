@@ -52,7 +52,7 @@ export const register = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err.message);
+    console.log(err);
     res.status(500).json({
       success: false,
       message: 'Server error',
@@ -64,6 +64,8 @@ export const register = async (req, res) => {
 // @route   POST /api/auth/login
 // @access  Public
 export const login = async (req, res) => {
+  console.log("hit");
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -103,7 +105,7 @@ export const login = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err.message);
+    console.log(err);
     res.status(500).json({
       success: false,
       message: 'Server error',

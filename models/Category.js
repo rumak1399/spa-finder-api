@@ -10,12 +10,14 @@ const CategorySchema = new Schema({
   },
   icon: {
     type: String,
-    required: true,
+    // required: true,
   },
   description: {
     type: String,
   },
-  subCategories: [String],
+  root: {
+    type: String,
+  },
   created: {
     type: Date,
     default: Date.now,

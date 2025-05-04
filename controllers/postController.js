@@ -1,17 +1,17 @@
-import Product from "../models/Product.js";
 import mongoose from "mongoose";
+import Post from "../models/Post.js";
 
 export const addPost = async (req, res) => {
 
     try {
     const {
       title,
-      slug,
+      // slug,
       description,
       specification,
       status,
       image,
-      brochure,
+      // brochure,
       category,
       price,
       discount,
@@ -21,7 +21,7 @@ export const addPost = async (req, res) => {
     } = req.body;
 
     // Validate required fields
-    if (!title || !slug || !status || !image || !category) {
+    if (!title  || !status || !image || !category) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -33,14 +33,14 @@ export const addPost = async (req, res) => {
     // await connectToMongoDB();
 
     // Create a new product
-    const newProduct = new Product({
+    const newProduct = new Post({
       title,
-      slug,
+      // slug,
       specification,
       description,
       status,
       image,
-      brochure,
+      // brochure,
       category,
       price,
       discount,

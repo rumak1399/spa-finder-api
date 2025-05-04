@@ -47,7 +47,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/services', servicesRouter);
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/post', postRouter);
-app.use('/api/category', categoriesRouter);
+app.use('/api/categories', categoriesRouter);
 
 
 

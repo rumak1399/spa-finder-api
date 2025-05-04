@@ -2,10 +2,8 @@ import express from "express";
 import { check } from "express-validator";
 import {
   addReview,
-  createCategory,
   createService,
   deleteService,
-  getCategories,
   getService,
   getServices,
   updateService,
@@ -60,21 +58,5 @@ router.post(
   addReview
 );
 
-// Get all categories
-router.get("/categories/all", getCategories);
-
-// Create category - protected & restricted to admin
-router.post(
-  "/categories",
-  [
-    protect,
-    authorize("admin"),
-    [
-      check("name", "Name is required").not().isEmpty(),
-      check("icon", "Icon is required").not().isEmpty(),
-    ],
-  ],
-  createCategory
-);
 
 export default router;

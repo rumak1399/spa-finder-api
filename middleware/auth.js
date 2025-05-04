@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 export const protect = async (req, res, next) => {
+  console.log('LIME AT 5', req.headers.authorization);
+  
   let token;
 
   if (
@@ -32,6 +34,8 @@ export const protect = async (req, res, next) => {
 
 export const authorize = (...roles) => {
   return (req, res, next) => {
+    console.log("LINE AT 35 role", req.user.role);
+    
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
