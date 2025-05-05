@@ -9,19 +9,19 @@ export const addPost = async (req, res) => {
       // slug,
       description,
       specification,
-      status,
+      // status,
       image,
       // brochure,
       category,
       price,
       discount,
       discountAmount,
-      featured,
-      newlyArrived,
+      // featured,
+      popular,
     } = req.body;
 
     // Validate required fields
-    if (!title  || !status || !image || !category) {
+    if (!title  || !image || !category) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -38,15 +38,15 @@ export const addPost = async (req, res) => {
       // slug,
       specification,
       description,
-      status,
+      // status,
       image,
       // brochure,
       category,
       price,
       discount,
       discountAmount,
-      featured,
-      newlyArrived,
+      // featured,
+      popular,
     });
 
     // Save the product to the database
@@ -57,5 +57,21 @@ export const addPost = async (req, res) => {
   } catch (error) {
     console.error("Error creating product:", error);
     res.status(500).json({ message: "Failed to create product", error });
+  }
+};
+
+
+export const getPosts = async (req, res) => {
+  try {
+    const posts = await Post.find().populate("category"); // Populate category details
+
+    if (posts.length === 0) {
+      return res.status(404).json({ message: "No posts found" });
+    }
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

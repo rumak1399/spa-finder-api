@@ -26,9 +26,14 @@ const PostSchema = new Schema(
       ref: "Category", // Reference the Category model
       required: false,
     },
-    featured: { type: Boolean, required: false },
-    newlyArrived: { type: Boolean, required: false },
-    status: { type: String, required: true },
+    review: [{
+      type: Schema.Types.ObjectId,
+      ref: "Review", // Reference the Category model
+      required: false,
+    }],
+    // featured: { type: Boolean, required: false },
+    popular: { type: Boolean, required: false },
+    // status: { type: String, required: true },
   },
   {
     timestamps: true,
