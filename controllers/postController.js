@@ -76,11 +76,26 @@ export const getPosts = async (req, res) => {
 
 export const getPostsByCategory = async (req, res) => {
   console.log("hit");
-  
+
   try {
     const { id } = req.params;
-    console.log('category Id', id);
-    const result = await Post.find({ category: id }).populate("category").populate("review") ;
+    console.log("category Id", id);
+    const result = await Post.find({ category: id })
+      .populate("category")
+      .populate("review");
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+export const getSinglePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Post.findById({ _id: id })
+      .populate("category")
+      .populate("review ");
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
