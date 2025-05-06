@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 import Post from "../models/Post.js";
 
 export const addPost = async (req, res) => {
-
-    try {
+  try {
     const {
       title,
       // slug,
@@ -21,7 +20,7 @@ export const addPost = async (req, res) => {
     } = req.body;
 
     // Validate required fields
-    if (!title  || !image || !category) {
+    if (!title || !image || !category) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -60,7 +59,6 @@ export const addPost = async (req, res) => {
   }
 };
 
-
 export const getPosts = async (req, res) => {
   try {
     const posts = await Post.find().populate("category").populate("review"); // Populate category details
@@ -73,5 +71,19 @@ export const getPosts = async (req, res) => {
   } catch (error) {
     console.error("Error fetching posts:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getPostsByCategory = async (req, res) => {
+  console.log("hit");
+  
+  try {
+    const { id } = req.params;
+    console.log('category Id', id);
+    const result = await Post.find({ category: id });
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
   }
 };
