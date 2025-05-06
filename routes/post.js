@@ -9,6 +9,6 @@ router.get("/getposts", getPosts);
 
 router.get("/getpostsbycategory/:id", getPostsByCategory);
 
-router.get("/getsingleposts/:id", getSinglePost);
+router.get("/getsinglepost/:id", getSinglePost);
 
 export default router;
