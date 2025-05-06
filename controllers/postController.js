@@ -93,9 +93,7 @@ export const getPostsByCategory = async (req, res) => {
 export const getSinglePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Post.findById({ _id: id })
-      .populate("category")
-      .populate("review ");
+    const result = await Post.findById(id).populate('review').populate('category') ;
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
