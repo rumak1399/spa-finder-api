@@ -63,7 +63,7 @@ export const addPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate("category"); // Populate category details
+    const posts = await Post.find().populate("category").populate("review"); // Populate category details
 
     if (posts.length === 0) {
       return res.status(404).json({ message: "No posts found" });
