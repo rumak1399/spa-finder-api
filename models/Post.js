@@ -21,6 +21,11 @@ const PostSchema = new Schema(
     price: { type: Number },
     discount: { type: Boolean, required: false },
     discountAmount: { type: Number, required: false },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User", // Reference the Category model
+      required: false,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category", // Reference the Category model
