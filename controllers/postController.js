@@ -1,5 +1,4 @@
 import mongoose  from "mongoose";
-import { ObjectId } from "mongodb";
 import Post from "../models/Post.js";
 
 export const addPost = async (req, res) => {
@@ -48,7 +47,7 @@ export const addPost = async (req, res) => {
       discountAmount,
       // featured,
       popular,
-        userId: userId ? new ObjectId(userId) : undefined
+      userId
     });
 
     // Save the product to the database
