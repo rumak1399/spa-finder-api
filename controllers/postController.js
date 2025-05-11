@@ -1,4 +1,4 @@
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
 import Post from "../models/Post.js";
 
 export const addPost = async (req, res) => {
@@ -47,7 +47,7 @@ export const addPost = async (req, res) => {
       discountAmount,
       // featured,
       popular,
-      userId
+      userId,
     });
 
     // Save the product to the database
@@ -95,8 +95,23 @@ export const getPostsByCategory = async (req, res) => {
 export const getSinglePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Post.findById(id).populate('review').populate('category') ;
+    const result = await Post.findById(id)
+      .populate("review")
+      .populate("category");
     res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+export const getPostsbyUserId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const posts = await Post.find({
+      userId: id,
+    });
+    res.status(200).json(posts);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
