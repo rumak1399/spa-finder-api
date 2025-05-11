@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose  from "mongoose";
+import { ObjectId } from "mongodb";
 import Post from "../models/Post.js";
 
 export const addPost = async (req, res) => {
@@ -17,6 +18,7 @@ export const addPost = async (req, res) => {
       discountAmount,
       // featured,
       popular,
+      userId,
     } = req.body;
 
     // Validate required fields
@@ -46,6 +48,7 @@ export const addPost = async (req, res) => {
       discountAmount,
       // featured,
       popular,
+        userId: userId ? new ObjectId(userId) : undefined
     });
 
     // Save the product to the database
