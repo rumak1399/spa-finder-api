@@ -23,7 +23,7 @@ export const addTag = async (req, res) => {
     await Post.findByIdAndUpdate(
       req.body.postId,
       {
-        $addToSet: { tags: req.body.tags},
+        $addToSet: { tags: { $each: req.body.tags } },
       },
       {
         new: true,
@@ -40,13 +40,13 @@ export const getUniqueTags = async (req, res) => {
   try {
     const allTags = await Tag.find({}, "tags");
     // console.log("allTags", allTags);
-    
+
     const tagsFlat = allTags.flatMap((tag) => tag.tags);
     // con/sole.log("tagsFlat", tagsFlat);
-    
+
     const uniqueTags = Array.from(new Set(tagsFlat));
     // console.log("uniqueTags", uniqueTags);
-    
+
     res.status(200).json(uniqueTags);
   } catch (error) {
     console.log(error);
