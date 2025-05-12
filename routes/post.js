@@ -13,6 +13,6 @@ router.get("/getsinglepost/:id", getSinglePost);
 
 router.get("/getpostsbyuserid/:id", getPostsbyUserId);
 
-router.post("/getpostsbycategoryandtags", getPostsByCategoryAndTags);
+router.get("/getpostsbycategoryandtags", getPostsByCategoryAndTags);
 
 export default router;
