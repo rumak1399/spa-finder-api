@@ -26,16 +26,23 @@ const PostSchema = new Schema(
       ref: "User", // Reference the Category model
       required: false,
     },
+    tags: {
+      type: Schema.Types.ObjectId,
+      ref: "Tag", // Reference the Category model
+      required: false,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category", // Reference the Category model
       required: false,
     },
-    review: [{
-      type: Schema.Types.ObjectId,
-      ref: "Review", // Reference the Category model
-      required: false,
-    }],
+    review: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Review", // Reference the Category model
+        required: false,
+      },
+    ],
     // featured: { type: Boolean, required: false },
     popular: { type: Boolean, required: false },
     // status: { type: String, required: true },
