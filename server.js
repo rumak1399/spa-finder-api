@@ -11,6 +11,8 @@ import bookingsRouter from "./routes/bookings.js";
 import postRouter from "./routes/post.js";
 import categoriesRouter from "./routes/categories.js";
 import reviewRouter from "./routes/review.js";
+import tagsRouter from "./routes/tags.js";
+
 const app = express();
 
 app.use(cors());
@@ -50,6 +52,7 @@ app.use('/api/bookings', bookingsRouter);
 app.use('/api/post', postRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/review', reviewRouter);
+app.use('/api/tag', tagsRouter);
 
 
 
