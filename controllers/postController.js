@@ -118,23 +118,46 @@ export const getPostsbyUserId = async (req, res) => {
   }
 };
 
-export const getPostsByCategoryAndTags = async(req, res)=>{
+// export const getPostsByCategoryAndTags = async(req, res)=>{
   
+//   try {
+//     const {categoryId, tags} = req.body;
+//     console.log('req body', categoryId, tags, req.body);
+//        if (!categoryId || !Array.isArray(tags)) {
+//       return res.status(400).json({ message: "Category ID and tags are required." });
+//     }
+
+//     const posts = await Post.find({
+//       category: categoryId,
+//       tags: { $in: tags },
+//     });
+
+//     res.status(200).json(posts);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json(error);
+//   }
+// }
+
+export const getPostsByCategoryAndTags = async (req, res) => {
   try {
-    const {categoryId, tags} = req.body;
-    console.log('req body', categoryId, tags, req.body);
-       if (!categoryId || !Array.isArray(tags)) {
+    const { categoryId, tags } = req.query;
+    console.log("req query", categoryId, tags);
+
+    const tagArray = typeof tags === "string" ? tags.split(",") : [];
+
+    if (!categoryId || !Array.isArray(tagArray)) {
       return res.status(400).json({ message: "Category ID and tags are required." });
     }
 
     const posts = await Post.find({
       category: categoryId,
-      tags: { $in: tags },
+      tags: { $in: tagArray },
     });
 
     res.status(200).json(posts);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json(error);
   }
-}
+};
