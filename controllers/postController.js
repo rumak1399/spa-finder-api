@@ -153,7 +153,7 @@ export const getPostsByCategoryAndTags = async (req, res) => {
     const posts = await Post.find({
       category: categoryId,
       tags: { $in: tagArray },
-    });
+    }).populate('review').populate('category');
 
     res.status(200).json(posts);
   } catch (error) {
