@@ -119,10 +119,20 @@ export const getPostsbyUserId = async (req, res) => {
 };
 
 export const getPostsByCategoryAndTags = async(req, res)=>{
+  
   try {
     const {categoryId, tags} = req.body;
-    console.log('req body', categoryId, tags);
-    res.status(200).json('data')
+    console.log('req body', categoryId, tags, req.body);
+       if (!categoryId || !Array.isArray(tags)) {
+      return res.status(400).json({ message: "Category ID and tags are required." });
+    }
+
+    const posts = await Post.find({
+      categoryId: categoryId,
+      tags: { $in: tags },
+    });
+
+    res.status(200).json(posts);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
