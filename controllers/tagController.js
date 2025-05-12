@@ -12,7 +12,7 @@ export const addTag = async (req, res) => {
       await Tag.findOneAndUpdate(
         { postId: req.body.postId },
         {
-          $addToSet: { tags: req.body.tags },
+          $addToSet: { tags: { $each: req.body.tags } },
         },
         {
           new: true,

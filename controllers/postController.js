@@ -117,3 +117,14 @@ export const getPostsbyUserId = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+export const getPostsByCategoryAndTags = async(req, res)=>{
+  try {
+    const {categoryId, tags} = req.body;
+    console.log('req body', categoryId, tags);
+    res.status(200).json('data')
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+}

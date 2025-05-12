@@ -1,5 +1,5 @@
 import express from "express";
-import { addPost, getPosts, getPostsByCategory, getPostsbyUserId, getSinglePost } from "../controllers/postController.js";
+import { addPost, getPosts, getPostsByCategory, getPostsByCategoryAndTags, getPostsbyUserId, getSinglePost } from "../controllers/postController.js";
 
 const router = express.Router();
 
@@ -12,5 +12,7 @@ router.get("/getpostsbycategory/:id", getPostsByCategory);
 router.get("/getsinglepost/:id", getSinglePost);
 
 router.get("/getpostsbyuserid/:id", getPostsbyUserId);
+
+router.post("/getpostsbycategoryandtags", getPostsByCategoryAndTags);
 
 export default router;
