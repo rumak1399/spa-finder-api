@@ -42,6 +42,8 @@ const PostSchema = new Schema(
     // featured: { type: Boolean, required: false },
     popular: { type: Boolean, required: false },
     // status: { type: String, required: true },
+    email: { type: String },
+    phone: { type: String },
   },
   {
     timestamps: true,

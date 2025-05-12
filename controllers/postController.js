@@ -18,6 +18,8 @@ export const addPost = async (req, res) => {
       // featured,
       popular,
       userId,
+email, 
+phone
     } = req.body;
 
     // Validate required fields
@@ -48,6 +50,8 @@ export const addPost = async (req, res) => {
       // featured,
       popular,
       userId,
+    email, 
+    phone
     });
 
     // Save the product to the database
