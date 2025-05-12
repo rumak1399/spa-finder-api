@@ -173,3 +173,14 @@ export const getPostsByCategoryAndTags = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+
+export const getPostsByPopular = async(req, res)=>{
+  try {
+    const posts = await Post.find({popular: true});
+    res.status(200).json(posts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+}
