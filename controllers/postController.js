@@ -128,7 +128,7 @@ export const getPostsByCategoryAndTags = async(req, res)=>{
     }
 
     const posts = await Post.find({
-      categoryId: categoryId,
+      category: categoryId,
       tags: { $in: tags },
     });
 
