@@ -8,17 +8,16 @@ export const addTag = async (req, res) => {
     console.log(newTag, isPostId);
     if (isPostId.length === 0) {
       await newTag.save();
-    }
-    else{
-    await Tag.findByIdAndUpdate(
-      req.body.postId,
-      {
-        $addToSet: { tags: newTag?._id },
-      },
-      {
-        new: true,
-      }
-    );    
+    } else {
+      await Tag.findOneAndUpdate(
+        { postId: req.body.postId },
+        {
+          $addToSet: { tags: req.body.tags },
+        },
+        {
+          new: true,
+        }
+      );
     }
     // here add the logic to add this review in the post model
     await Post.findByIdAndUpdate(
@@ -31,6 +30,24 @@ export const addTag = async (req, res) => {
       }
     );
     res.status(200).json(newTag);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+export const getUniqueTags = async (req, res) => {
+  try {
+    const allTags = await Tag.find();
+    console.log("allTags", allTags);
+    
+    const tagsFlat = allTags.flatMap((tag) => tag.tags);
+    console.log("tagsFlat", tagsFlat);
+    
+    const uniqueTags = Array.from(new Set(tagsFlat));
+    console.log("uniqueTags", uniqueTags);
+    
+    res.status(200).json(uniqueTags);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
