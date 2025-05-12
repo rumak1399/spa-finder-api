@@ -146,14 +146,22 @@ export const getPostsByCategoryAndTags = async (req, res) => {
 
     const tagArray = typeof tags === "string" ? tags.split(",") : [];
 
-    if (!categoryId || !Array.isArray(tagArray)) {
-      return res.status(400).json({ message: "Category ID and tags are required." });
+    if (!categoryId && tagArray.length === 0) {
+      return res.status(400).json({ message: "At least categoryId or tags are required." });
     }
 
-    const posts = await Post.find({
-      category: categoryId,
-      tags: { $in: tagArray },
-    }).populate('review').populate('category');
+    // Build the dynamic filter
+    const filter = [];
+    if (categoryId) {
+      filter.push({ category: categoryId });
+    }
+    if (tagArray.length > 0) {
+      filter.push({ tags: { $in: tagArray } });
+    }
+
+    const posts = await Post.find({ $or: filter })
+      .populate('review')
+      .populate('category');
 
     res.status(200).json(posts);
   } catch (error) {
