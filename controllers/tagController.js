@@ -1,4 +1,5 @@
 import Post from "../models/Post.js";
+import Tag from "../models/Tag.js";
 
 export const addTag = async (req, res) => {
   try {
