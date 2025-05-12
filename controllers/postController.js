@@ -18,8 +18,9 @@ export const addPost = async (req, res) => {
       // featured,
       popular,
       userId,
-email, 
-phone
+      email,
+      phone,
+      location,
     } = req.body;
 
     // Validate required fields
@@ -50,8 +51,9 @@ phone
       // featured,
       popular,
       userId,
-    email, 
-    phone
+      email,
+      phone,
+      location,
     });
 
     // Save the product to the database
@@ -123,7 +125,7 @@ export const getPostsbyUserId = async (req, res) => {
 };
 
 // export const getPostsByCategoryAndTags = async(req, res)=>{
-  
+
 //   try {
 //     const {categoryId, tags} = req.body;
 //     console.log('req body', categoryId, tags, req.body);
@@ -151,7 +153,9 @@ export const getPostsByCategoryAndTags = async (req, res) => {
     const tagArray = typeof tags === "string" ? tags.split(",") : [];
 
     if (!categoryId && tagArray.length === 0) {
-      return res.status(400).json({ message: "At least categoryId or tags are required." });
+      return res
+        .status(400)
+        .json({ message: "At least categoryId or tags are required." });
     }
 
     // Build the dynamic filter
@@ -164,8 +168,8 @@ export const getPostsByCategoryAndTags = async (req, res) => {
     }
 
     const posts = await Post.find({ $or: filter })
-      .populate('review')
-      .populate('category');
+      .populate("review")
+      .populate("category");
 
     res.status(200).json(posts);
   } catch (error) {
@@ -174,13 +178,14 @@ export const getPostsByCategoryAndTags = async (req, res) => {
   }
 };
 
-
-export const getPostsByPopular = async(req, res)=>{
+export const getPostsByPopular = async (req, res) => {
   try {
-    const posts = await Post.find({popular: true}).populate('review').populate('category');
+    const posts = await Post.find({ popular: true })
+      .populate("review")
+      .populate("category");
     res.status(200).json(posts);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
   }
-}
+};

@@ -44,6 +44,16 @@ const PostSchema = new Schema(
     // status: { type: String, required: true },
     email: { type: String },
     phone: { type: String },
+    location: {
+      lat: {
+        type: Number,
+        // required: true,
+      },
+      lng: {
+        type: Number,
+        // required: true,
+      },
+    },
   },
   {
     timestamps: true,
