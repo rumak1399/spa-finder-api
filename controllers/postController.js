@@ -177,7 +177,7 @@ export const getPostsByCategoryAndTags = async (req, res) => {
 
 export const getPostsByPopular = async(req, res)=>{
   try {
-    const posts = await Post.find({popular: true});
+    const posts = await Post.find({popular: true}).populate('review').populate('category');
     res.status(200).json(posts);
   } catch (error) {
     console.log(error);
