@@ -34,8 +34,6 @@ export const addPost = async (req, res) => {
     }
 
     // await connectToMongoDB();
-
-    // Create a new product
     const newProduct = new Post({
       title,
       // slug,
@@ -55,11 +53,7 @@ export const addPost = async (req, res) => {
       phone,
       location,
     });
-
-    // Save the product to the database
     await newProduct.save();
-
-    // Respond with the created product
     res.status(201).json(newProduct);
   } catch (error) {
     console.error("Error creating product:", error);
