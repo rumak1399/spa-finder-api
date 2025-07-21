@@ -12,6 +12,7 @@ import postRouter from "./routes/post.js";
 import categoriesRouter from "./routes/categories.js";
 import reviewRouter from "./routes/review.js";
 import tagsRouter from "./routes/tags.js";
+import locationRouter from './routes/location.js'
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use('/api/post', postRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/review', reviewRouter);
 app.use('/api/tag', tagsRouter);
+app.use('/api/location', locationRouter);
 
 
 
