@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Post from "../models/Post.js";
+import State from '../models/State.js'
+import City from '../models/City.js'
 
 export const addPost = async (req, res) => {
   try {
@@ -103,7 +105,12 @@ export const getSinglePost = async (req, res) => {
     const result = await Post.findById(id)
       .populate("review")
       .populate("category");
-    res.status(200).json(result);
+    const state = await State.findById(result.state)
+    const city = await City.findById(result.city)
+    const fullAddress = `${result.address}, ${city.name}, ${state.name}`;
+    const plainResult = result.toObject(); // Convert to plain object
+    plainResult.fullAddress = fullAddress;
+    res.status(200).json(plainResult);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
