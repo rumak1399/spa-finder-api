@@ -20,7 +20,10 @@ export const addPost = async (req, res) => {
       userId,
       email,
       phone,
-      location,
+      // location,
+      state,
+      city,
+      address
     } = req.body;
 
     // Validate required fields
@@ -51,7 +54,9 @@ export const addPost = async (req, res) => {
       userId,
       email,
       phone,
-      location,
+      state,
+      city,
+      address
     });
     await newProduct.save();
     res.status(201).json(newProduct);

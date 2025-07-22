@@ -44,16 +44,30 @@ const PostSchema = new Schema(
     // status: { type: String, required: true },
     email: { type: String },
     phone: { type: String },
-    location: {
-      lat: {
-        type: Number,
-        // required: true,
-      },
-      lng: {
-        type: Number,
-        // required: true,
-      },
+    state: {
+      type: Schema.Types.ObjectId,
+        ref: "State", // Reference the Category model
+        required: true,
     },
+    city: {
+      type: Schema.Types.ObjectId,
+        ref: "City", // Reference the Category model
+        required: true,
+    },
+    address: {
+      type: String,
+      required: true
+    },
+    // location: {
+    //   lat: {
+    //     type: Number,
+    //     // required: true,
+    //   },
+    //   lng: {
+    //     type: Number,
+    //     // required: true,
+    //   },
+    // },
   },
   {
     timestamps: true,
