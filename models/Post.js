@@ -3,9 +3,7 @@ import { model, Schema } from "mongoose";
 const PostSchema = new Schema(
   {
     title: { type: String, required: true },
-    // slug: { type: String, required: true, unique: true }, // Unique slug
     description: { type: String, required: false },
-    specification: { type: String, required: false, default: "" },
     image: {
       url: String,
       alt: String,
@@ -14,11 +12,10 @@ const PostSchema = new Schema(
       url: String,
       alt: String,
     },
-    // brochure: {
-    //   url: String,
-    //   filename: String,
-    // },
     price: { type: Number },
+    additionalPriceInfo: {
+      type: String,
+    },
     discount: { type: Boolean, required: false },
     discountAmount: { type: Number, required: false },
     userId: {
@@ -39,9 +36,7 @@ const PostSchema = new Schema(
         required: false,
       },
     ],
-    // featured: { type: Boolean, required: false },
     popular: { type: Boolean, required: false },
-    // status: { type: String, required: true },
     email: { type: String },
     phone: { type: String },
     state: {
