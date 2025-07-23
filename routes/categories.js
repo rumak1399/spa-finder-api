@@ -9,23 +9,10 @@ const router = express.Router();
 // Create category - protected & restricted to admin
 router.post(
     "/",
-    // [
-    //     // protect,
-    //     // authorize("admin"),
-    //     [
-    //         check("name", "Name is required").not().isEmpty(),
-    //         check("icon", "Icon is required").not().isEmpty(),
-    //     ],
-    // ],
     createCategory
 );
-
-
 router.get("/all", getCategories);
-
 router.delete("/:id", deleteCategory);
-
-// router.get('/rootCategories', getCategoriesWithRoot);
 router.get('/rootCategories', getUniqueRootCategories);
 router.put('/update/:id', updateCategory);
 

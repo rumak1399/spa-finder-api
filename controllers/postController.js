@@ -153,27 +153,24 @@ export const getPostsbyUserId = async (req, res) => {
 
 export const getPostsByCategoryAndTags = async (req, res) => {
   try {
-    const { categoryId, tags } = req.query;
-    console.log("req query", categoryId, tags);
+    const { categoryId, state, city } = req.query;
 
-    const tagArray = typeof tags === "string" ? tags.split(",") : [];
-
-    if (!categoryId && tagArray.length === 0) {
+    if (!categoryId || !state || !city) {
       return res
         .status(400)
-        .json({ message: "At least categoryId or tags are required." });
+        .json({ message: "Category, state, city are required." });
     }
 
     // Build the dynamic filter
-    const filter = [];
-    if (categoryId) {
-      filter.push({ category: categoryId });
-    }
-    if (tagArray.length > 0) {
-      filter.push({ tags: { $in: tagArray } });
-    }
+    // const filter = [];
+    // if (categoryId) {
+    //   filter.push({ category: categoryId });
+    // }
+    // if (tagArray.length > 0) {
+    //   filter.push({ tags: { $in: tagArray } });
+    // }
 
-    const posts = await Post.find({ $or: filter })
+    const posts = await Post.find({city})
       .populate("review")
       .populate("category");
 
