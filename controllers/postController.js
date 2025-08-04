@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import Post from "../models/Post.js";
-import State from '../models/State.js'
-import City from '../models/City.js'
+import State from "../models/State.js";
+import City from "../models/City.js";
+import Category from "../models/Category.js";
 
 export const addPost = async (req, res) => {
   try {
@@ -20,7 +21,7 @@ export const addPost = async (req, res) => {
       phone,
       state,
       city,
-      address
+      address,
     } = req.body;
 
     // Validate required fields
@@ -49,7 +50,7 @@ export const addPost = async (req, res) => {
       phone,
       state,
       city,
-      address
+      address,
     });
     await newProduct.save();
     res.status(201).json(newProduct);
@@ -96,8 +97,8 @@ export const getSinglePost = async (req, res) => {
     const result = await Post.findById(id)
       .populate("review")
       .populate("category");
-    const state = await State.findById(result.state)
-    const city = await City.findById(result.city)
+    const state = await State.findById(result.state);
+    const city = await City.findById(result.city);
     const fullAddress = `${result.address}, ${city.name}, ${state.name}`;
     const plainResult = result.toObject(); // Convert to plain object
     plainResult.fullAddress = fullAddress;
@@ -161,7 +162,7 @@ export const getPostsByCategoryAndTags = async (req, res) => {
     //   filter.push({ tags: { $in: tagArray } });
     // }
 
-    const posts = await Post.find({city})
+    const posts = await Post.find({ city })
       .populate("review")
       .populate("category");
 
@@ -181,5 +182,18 @@ export const getPostsByPopular = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
+  }
+};
+
+export const getPostsByCategorySlug = async (req, res) => {
+  try {
+    const categoryItem = await Category.findOne({ slug: req.params.slug });
+
+    const result = await Post.find({ category: categoryItem._id });
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: "something went wrong" });
   }
 };
