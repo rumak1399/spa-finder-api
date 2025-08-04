@@ -15,6 +15,9 @@ const CategorySchema = new Schema({
   description: {
     type: String,
   },
+  slug: {
+    type: String,
+  },
   root: {
     type: String,
   },

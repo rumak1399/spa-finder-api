@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 import Category from "../models/Category.js";
 
-// @desc    Create new category
-// @route   POST /api/services/categories
-// @access  Private (Admin)
-
 export const createCategory = async (req, res) => {
 
   // const errors = validationResult(req);
